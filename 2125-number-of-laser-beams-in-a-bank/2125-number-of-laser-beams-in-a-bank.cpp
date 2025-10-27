@@ -1,39 +1,23 @@
 class Solution {
 public:
-
-    int count1(string row)
-    {
-        int count=0;
-        for(char x:row)
-        {
-            if(x=='1')
-            {
-                count++;
-            }
-        }
-        return count;
-    }
     int numberOfBeams(vector<string>& bank) {
-
-        int n=bank.size();
-        int ans=0;
-
-        int x=0,y=0;
-
+        int prevDevices = 0;
+        int totalBeams = 0;
         
-        for(int i=0;i<n;i++)
-        {
-            x = count1(bank[i]);
-            if(x>0)
-            {
-                ans += x*y;
-                y = x; 
+        for (const string& row : bank) {
+            int currDevices = 0;
+            for (char c : row) {
+                if (c == '1') {
+                    currDevices++;
+                }
+            }
+            
+            if (currDevices > 0) {
+                totalBeams += prevDevices * currDevices;
+                prevDevices = currDevices;
             }
         }
-        return ans;
-
-
-       
         
+        return totalBeams;
     }
 };
