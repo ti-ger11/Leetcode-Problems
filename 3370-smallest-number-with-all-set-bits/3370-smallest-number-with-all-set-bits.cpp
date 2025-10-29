@@ -2,8 +2,11 @@ class Solution {
 public:
     int smallestNumber(int n) {
 
-        int k=log2(n)+1;
-        return (1<<k)-1;
+        int k=log2(n);
+
+        int x=pow(2,k+1)-1;
+
+        return x;
         
     }
 };
