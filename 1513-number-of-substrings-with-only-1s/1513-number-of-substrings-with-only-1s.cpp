@@ -1,27 +1,15 @@
 class Solution {
 public:
     int numSub(string s) {
-        const long long MOD = 1000000007LL;
-        long long run = 0;
-        long long ans = 0;
-
-        for (char c : s) {
-            if (c == '1') {
-                run++;
+        int cnt = 0, total = 0, mod = 1e9 + 7;
+        for (char a : s) {
+            if (a == '1') {
+                cnt++;
             } else {
-                if (run > 0) {
-                    // add run*(run+1)/2 safely under modulo
-                    long long add = (run * (run + 1) / 2) % MOD;
-                    ans = (ans + add) % MOD;
-                    run = 0;
-                }
+                cnt = 0;
             }
+            total = (total + cnt) % mod;
         }
-        if (run > 0) {
-            long long add = (run * (run + 1) / 2) % MOD;
-            ans = (ans + add) % MOD;
-        }
-
-        return static_cast<int>(ans);
+        return total;
     }
 };
