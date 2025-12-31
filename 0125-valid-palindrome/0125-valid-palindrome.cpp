@@ -1,40 +1,30 @@
+char tolowercase(char ch){
+    if(ch>='a' && ch<='z' || (ch>=0 && ch<=9 ))
+        return ch;
+    else{
+        ch=ch-'A'+'a';
+        return ch;
+    }
+}
+
+
 class Solution {
 public:
     bool isPalindrome(string s) {
-
-        string ans=s;
-
-        transform(ans.begin(), ans.end(), ans.begin(), ::tolower);
-
-        string s1="",s2="";
-
-        for(auto c:ans)
-        {
-            if('a'<=c&&c<='z')
-            {
-                s1+=c;
-            }
-            else if('0'<=c&&c<='9')
-            {
-                s1+=c;
-            }
+        int i=0,j=s.length()-1;
+    while(i<=j){
+        if(isalnum(s[i])==0)
+            i++;
+        else if(isalnum(s[j])==0)
+            j--;
+        else if(tolowercase(s[i])!=tolowercase(s[j]))
+            return false;
+        else{
+            i++;
+            j--;
         }
-
-
-        s2=s1;
-
-        reverse(s2.begin(),s2.end());
-
-        cout<<ans<<"   "<<s1;
-
-        if(s1==s2)
-        {
-            return true;
-        }
-
-      
-
-        return false;
-
+    }
+    return true;
+    
     }
 };
