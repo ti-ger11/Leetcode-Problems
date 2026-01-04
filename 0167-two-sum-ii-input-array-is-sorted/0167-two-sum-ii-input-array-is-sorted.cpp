@@ -1,20 +1,20 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& numbers, int target) {
-        int n = numbers.size();
+        int left = 0, right = numbers.size() - 1;
         
-        for(int i = 0; i < n; i++) {
-           
-            int complement = target - numbers[i];
-            auto it = lower_bound(numbers.begin() + i + 1, numbers.end(), complement);
+        while (left < right) {
+            int sum = numbers[left] + numbers[right];
             
-           
-            if(it != numbers.end() && *it == complement) {
-                int j = distance(numbers.begin(), it);
-                return {i + 1, j + 1}; 
+            if (sum == target) {
+                return {left + 1, right + 1}; // Convert to 1-indexed
+            } else if (sum < target) {
+                left++; // Need a larger sum
+            } else {
+                right--; // Need a smaller sum
             }
         }
         
-        return {-1, -1};
+        return {-1, -1}; // Should never reach here per problem guarantee
     }
 };
