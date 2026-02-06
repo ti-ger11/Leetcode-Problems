@@ -1,37 +1,42 @@
 class Solution {
 public:
-    void find_permutations(vector<int> ip, vector<int> op,
-                           vector<vector<int>> &res)
+
+    void solve(vector<int>&nums,int si,vector<vector<int>>&res)
     {
-        if(ip.size() == 0)
+        //base condition
+        if(si==nums.size())
         {
-            res.push_back(op);
+            res.push_back(nums);
             return;
         }
 
         unordered_set<int>mp;
 
-        for(int i = 0; i < ip.size(); i++)
+        for(int i=si;i<nums.size();i++)
         {
-            if(mp.find(ip[i])==mp.end())
+            if(mp.find(nums[i])==mp.end())
             {
-                mp.insert(ip[i]);
-                vector<int> ip_new = ip;
-                vector<int> op_new = op;
+                mp.insert(nums[i]);
 
-                op_new.push_back(ip[i]);
-                ip_new.erase(ip_new.begin() + i);
+                swap(nums[i],nums[si]);
 
-                find_permutations(ip_new, op_new, res);
+                solve(nums,si+1,res);
 
+                //backtarck
+
+                swap(nums[i],nums[si]);
             }
-           
-        }
-    }
 
+        }
+
+
+    }
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>> res;
-        find_permutations(nums, {}, res);
+
+        vector<vector<int>>res;
+        solve(nums,0,res);
+
         return res;
+        
     }
 };
