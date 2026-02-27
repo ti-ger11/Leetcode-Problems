@@ -1,66 +1,52 @@
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2")
+
 class KthLargest {
-public:
-    vector<int> mh;
-    int K;
+    int bit[20002] = {};
+    int K, total = 0;
+    const int OFFSET = 10000;
+    const int MAXN = 20001;
 
-    void minheapify(vector<int>& a, int i)
-    {
-        int n = a.size();
-        int l = 2*i + 1;
-        int r = 2*i + 2;
-        int s = i;
-
-        if(l < n && a[l] < a[s])
-            s = l;
-
-        if(r < n && a[r] < a[s])
-            s = r;
-
-        if(s != i)
-        {
-            swap(a[i], a[s]);
-            minheapify(a, s);
-        }
+    void update(int i, int val) {
+        for(i++; i <= MAXN; i += i & (-i))
+            bit[i] += val;
     }
 
-    void buildHeap(vector<int>& a)
-    {
-        for(int i = a.size()/2 - 1; i >= 0; i--)
-            minheapify(a, i);
+    // how many elements <= i
+    int query(int i) {
+        int sum = 0;
+        for(i++; i > 0; i -= i & (-i))
+            sum += bit[i];
+        return sum;
     }
 
-    KthLargest(int k, vector<int>& nums)
-    {
-        K = k;
-
-        for(int i=0;i<min(k,(int)nums.size());i++)
-            mh.push_back(nums[i]);
-
-        buildHeap(mh);
-
-        for(int i=k;i<nums.size();i++)
-        {
-            if(nums[i] > mh[0])
-            {
-                mh[0] = nums[i];
-                minheapify(mh,0);
+    // binary search on BIT to find kth largest
+    int findKth() {
+        // kth largest = (total - K + 1)th smallest
+        int target = total - K + 1;
+        int pos = 0;
+        int logn = 14; // 2^14 = 16384 > 20001
+        for(int i = logn; i >= 0; i--) {
+            if(pos + (1 << i) <= MAXN && bit[pos + (1 << i)] < target) {
+                pos += (1 << i);
+                target -= bit[pos];
             }
         }
+        return pos - OFFSET;
     }
 
-    int add(int val)
-    {
-        if(mh.size() < K)
-        {
-            mh.push_back(val);
-            buildHeap(mh);
+public:
+    KthLargest(int k, vector<int>& nums) {
+        K = k;
+        for(int x : nums) {
+            update(x + OFFSET, 1);
+            total++;
         }
-        else if(val > mh[0])
-        {
-            mh[0] = val;
-            minheapify(mh,0);
-        }
+    }
 
-        return mh[0];
+    int add(int val) {
+        update(val + OFFSET, 1);
+        total++;
+        return findKth();
     }
 };
