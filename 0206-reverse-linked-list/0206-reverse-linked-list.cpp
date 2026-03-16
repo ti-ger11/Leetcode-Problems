@@ -17,13 +17,22 @@ public:
             return head;
         }
 
-        ListNode* newhead=reverseList(head->next);
+        ListNode* prev=nullptr;
 
-        head->next->next=head;
-        head->next=nullptr;
+        ListNode* curr=head;
 
+        while(curr)
+        {
+            ListNode* temp=curr->next;
 
-        return newhead;
+            curr->next=prev;
+            prev=curr;
+            curr=temp;
+
+        }
+
+        return prev;
+
 
         
     }
