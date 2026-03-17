@@ -11,54 +11,44 @@
 class Solution {
 public:
 
-    ListNode* reversell(ListNode* x,ListNode* y)
+    ListNode* reversell(ListNode* head,ListNode* end)
     {
         ListNode* prev=nullptr;
-
-        ListNode* curr=x;
-
-        while(curr!=y)
+        ListNode* curr=head;
+        while(curr!=end)
         {
             ListNode* temp=curr->next;
-
             curr->next=prev;
             prev=curr;
             curr=temp;
-            
-
         }
 
         return prev;
-
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
-        // Step 1: Check if k nodes exist using fast pointer
+
+        int temp=k;
 
         ListNode* fast=head;
 
-        for(int i=0;i<k;i++)
+        while(temp)
         {
             if(fast==nullptr)
             {
                 return head;
             }
             fast=fast->next;
-           
+            temp--;
         }
-        
-        // Step 2: Reverse k nodes in place
 
         ListNode* newhead=reversell(head,fast);
-        
-        // Step 3: Recurse on remaining list and connect with the head
 
-        head->next=reverseKGroup(fast,k); //since old head now become the tail
-
+        head->next=reverseKGroup(fast,k);
 
 
         return newhead;
-        
 
-    
+
+        
     }
 };
