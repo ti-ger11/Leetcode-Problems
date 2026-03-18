@@ -4,7 +4,7 @@ public:
 
         int n=nums.size();
 
-        map<int,int>m;
+        unordered_map<int,int>m;
         int ans=0;
         int pre=0;
 
