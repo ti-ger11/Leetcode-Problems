@@ -11,13 +11,18 @@ public:
 
         for(int i=2;i<n;i++)
         {
-            int temp=2;
+            if(a[i]!=0)
+            {
+                int temp=2;
             while(temp*i<n)
             {
                 a[temp*i]=0;
                 temp++;
 
             }
+
+            }
+            
         }
 
         int sum=0;
