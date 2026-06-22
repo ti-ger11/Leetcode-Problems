@@ -1,30 +1,27 @@
-char tolowercase(char ch){
-    if(ch>='a' && ch<='z' || (ch>=0 && ch<=9 ))
-        return ch;
-    else{
-        ch=ch-'A'+'a';
-        return ch;
-    }
-}
-
-
 class Solution {
 public:
     bool isPalindrome(string s) {
-        int i=0,j=s.length()-1;
-    while(i<=j){
-        if(isalnum(s[i])==0)
-            i++;
-        else if(isalnum(s[j])==0)
-            j--;
-        else if(tolowercase(s[i])!=tolowercase(s[j]))
-            return false;
-        else{
-            i++;
-            j--;
+
+        string s1;
+
+        for (auto c : s) 
+        {
+            if (isalnum(c)) {
+                s1.push_back(tolower(c));
+            }
         }
-    }
-    return true;
-    
+
+        string s2 = s1;
+        reverse(s2.begin(), s2.end());
+
+        if(s1==s2)
+        {
+            return true;
+        }
+
+        return false;
+
+        
+        
     }
 };
