@@ -2,24 +2,25 @@ class Solution {
 public:
     bool isPalindrome(string s) {
 
-        string s1;
+        int left = 0, right = s.size() - 1;
 
-        for (auto c : s) 
+        while (left < right) 
         {
-            if (isalnum(c)) {
-                s1.push_back(tolower(c));
-            }
+            // skip non-alphanumeric from left
+            while (left<right && !isalnum(s[left]))  left++;
+            // skip non-alphanumeric from right
+            while ( right>left && !isalnum(s[right])) right--;
+            
+            // compare
+            if (tolower(s[left])!=tolower(s[right])) return false;
+            
+            left++; 
+            right--;
         }
 
-        string s2 = s1;
-        reverse(s2.begin(), s2.end());
+        return true;
 
-        if(s1==s2)
-        {
-            return true;
-        }
 
-        return false;
 
         
         
