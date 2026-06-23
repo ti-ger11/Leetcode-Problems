@@ -18,9 +18,7 @@ public:
         }
 
         ListNode* prev=nullptr;
-
         ListNode* curr=head;
-
         while(curr)
         {
             ListNode* temp=curr->next;
@@ -28,12 +26,9 @@ public:
             curr->next=prev;
             prev=curr;
             curr=temp;
-
         }
 
         return prev;
-
-
         
     }
 };
